@@ -36,6 +36,10 @@ def clear_screen():
     else:
         os.system("clear")
 
+def read_sql_from_file(file_path):
+    with open(file_path, 'r') as file:
+        return file.read()
+
 # Basic function to create tables in db
 def createTables(conn):
     try:
@@ -49,18 +53,8 @@ def createTables(conn):
         print('Creating tables...\n')
 
         # Create table
-        sql = '''
-        CREATE TABLE Product (
-            product_id INT,
-            name VARCHAR(100) NOT NULL,
-            supplier_id INT,
-            buying_price DECIMAL(10, 2),
-            selling_price DECIMAL(10, 2),
-            PRIMARY KEY (product_id)
-        );
-        '''
+        sql = read_sql_from_file('tables_config.sql')
         db.execute(sql)
-        conn.commit()
 
         print('----SUCCESS----\nReturning to menu...')
 
