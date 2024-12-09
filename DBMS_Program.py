@@ -1,6 +1,7 @@
 import mysql.connector
 import os
 import platform
+import Menus
 
 # Setting database connection variables
 DB_HOST = 'localhost'
@@ -22,56 +23,6 @@ def get_db_connection():
     except mysql.connector.Error as e:
         print(f"Error connecting to database: {e}")
         return None
-
-# Main menu display
-def displayMainMenu():
-    print('------MENU------')
-    print('  0. Settings')
-    print('  1. Create Tables')
-    print('  2. Insert Value')
-    print('  3. Update Value')
-    print('  4. Delete Value')
-    print('  3. Exit')
-    print('----------------')
-
-def displayInsertMenu():
-    print('------INSERT MENU------')
-    print('  1. Insert into Product')
-    print('  2. Insert into Supplier')
-    print('  3. Insert into Inventory')
-    print('  4. Insert into Customer')
-    print('  5. Insert into Transaction')
-    print('  6. Insert into Discount')
-    print('  7. Insert into Loyalty Program')
-    print('  8. add ')
-    print('  9. Back to Main Menu')
-    print('----------------')
-
-def displayUpdateMenu():
-    print('------INSERT MENU------')
-    print('  1. Update into Product')
-    print('  2. Update into Supplier')
-    print('  3. Update into Inventory')
-    print('  4. Update into Customer')
-    print('  5. Update into Transaction')
-    print('  6. Update into Discount')
-    print('  7. Update into Loyalty Program')
-    print('  8. add ')
-    print('  9. Back to Main Menu')
-    print('----------------')
-
-def displayDeleteMenu():
-    print('------INSERT MENU------')
-    print('  1. Delete into Product')
-    print('  2. Delete into Supplier')
-    print('  3. Delete into Inventory')
-    print('  4. Delete into Customer')
-    print('  5. Delete into Transaction')
-    print('  6. Delete into Discount')
-    print('  7. Delete into Loyalty Program')
-    print('  8. add ')
-    print('  9. Back to Main Menu')
-    print('----------------')
 
 # Terminal clearing function
 def clear_screen():
@@ -124,90 +75,6 @@ def createTables(conn):
             db.close()
 
 
-# Insert Menu function
-# When run, displays menu options for Insert
-def runInsertMenu(conn):
-    while True:
-        displayInsertMenu()
-        n = input("Enter option: ")
-        if n == '1':
-            print("Inserting into Product...")
-        elif n == '2':
-            print("Inserting into Supplier...")
-        elif n == '3':
-            print("Inserting into Inventory...")
-        elif n == '4':
-            print("Inserting into Customer...")
-        elif n == '5':
-            print("Inserting into Transaction...")
-        elif n == '6':
-            print("Inserting into Discount...")
-        elif n == '7':
-            print("Inserting into Loyalty Program...")
-        elif n == '8':
-            print("TBD")
-        elif n == '9':
-            print("Returning to Main Menu...\n")
-            displayMainMenu
-            break
-        else:
-            print("Invalid input. Please try again.\n")
-
-def runUpdateMenu(conn):
-    while True:
-        displayInsertMenu()
-        n = input("Enter option: ")
-        if n == '1':
-            print("Updateting into Product...")
-        elif n == '2':
-            print("Updateting into Supplier...")
-        elif n == '3':
-            print("Updateting into Inventory...")
-        elif n == '4':
-            print("Updateting into Customer...")
-        elif n == '5':
-            print("Updateting into Transaction...")
-        elif n == '6':
-            print("Updateting into Discount...")
-        elif n == '7':
-            print("Updateting into Loyalty Program...")
-        elif n == '8':
-            print("TBD")
-        elif n == '9':
-            print("Returning to Main Menu...\n")
-            displayMainMenu
-            break
-        else:
-            print("Invalid input. Please try again.\n")
-
-def runDeleteMenu(conn):
-    while True:
-        displayInsertMenu()
-        n = input("Enter option: ")
-        if n == '1':
-            print("Deleteting into Product...")
-        elif n == '2':
-            print("Deleteting into Supplier...")
-        elif n == '3':
-            print("Deleteting into Inventory...")
-        elif n == '4':
-            print("Deleteting into Customer...")
-        elif n == '5':
-            print("Deleteting into Transaction...")
-        elif n == '6':
-            print("Deleteting into Discount...")
-        elif n == '7':
-            print("Deleteting into Loyalty Program...")
-        elif n == '8':
-            print("TBD")
-        elif n == '9':
-            print("Returning to Main Menu...\n")
-            displayMainMenu
-            break
-        else:
-            print("Invalid input. Please try again.\n")
-
-
 
 # Menu function
 # When run, displays menu options to a user
@@ -217,7 +84,7 @@ def run(conn):
         conn = update_db_settings()
     # Main menu loop
     while True:
-        displayMainMenu()
+        Menus.displayMainMenu()
         n = input("Enter option: ")
         info = ""
         try:
@@ -232,13 +99,14 @@ def run(conn):
             createTables(conn)
         elif n == 2: 
             clear_screen()
-            runInsertMenu(conn)
+            Menus.runInsertMenu(conn)
         elif n == 3: 
             clear_screen()
-            runUpdateMenu(conn)
+            Menus.runUpdateMenu(conn)
+            
         elif n == 4: 
             clear_screen()
-            runDeleteMenu(conn)
+            Menus.runDeleteMenu(conn)
         elif n == 5:
             clear_screen()
             print('Successfully Exited.')
