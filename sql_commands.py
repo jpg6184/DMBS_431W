@@ -33,6 +33,11 @@ insert_transaction_sql = """
     VALUES (%s, %s, %s, %s, %s);
 """
 
+insert_empployee_sql = """
+    INSERT INTO Employee (employee_id, name)
+    VALUES (%s, %s);
+    """
+
 update_product_sql = """
     UPDATE Product
     SET name = %s, supplier_id = %s, buying_price = %s, selling_price = %s
@@ -75,6 +80,12 @@ update_transaction_sql = """
     WHERE transaction_id = %s;
 """
 
+update_employee_sql = """
+    UPDATE Employee
+    SET name = %s
+    WHERE employee_id = %s
+"""
+
 delete_product_sql = """
     DELETE FROM Product
     WHERE product_id = %s;
@@ -108,4 +119,9 @@ delete_inventory_sql = """
 delete_transaction_sql = """
     DELETE FROM Transaction
     WHERE transaction_id = %s;
+"""
+
+delete_employee_sql = """
+    DELETE FROM Employee
+    WHERE employee_id = %s;
 """

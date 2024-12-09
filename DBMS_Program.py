@@ -1,7 +1,7 @@
 import mysql.connector
 import os
 import platform
-import menus
+import menu_handler
 
 # Setting database connection variables
 DB_HOST = 'localhost'
@@ -84,7 +84,7 @@ def run(conn):
         conn = update_db_settings()
     # Main menu loop
     while True:
-        menus.displayMainMenu()
+        menu_handler.displayMainMenu()
         n = input("Enter option: ")
         info = ""
         try:
@@ -99,13 +99,13 @@ def run(conn):
             createTables(conn)
         elif n == 2: 
             clear_screen()
-            menus.runInsertMenu(conn)
+            menu_handler.runInsertMenu(conn)
         elif n == 3: 
             clear_screen()
-            menus.runUpdateMenu(conn)
+            menu_handler.runUpdateMenu(conn)
         elif n == 4: 
             clear_screen()
-            menus.runDeleteMenu(conn)
+            menu_handler.runDeleteMenu(conn)
         elif n == 5:
             clear_screen()
             print('Successfully Exited.')
@@ -113,8 +113,6 @@ def run(conn):
         else:
             clear_screen()
             print(info)
-
-
 
 if __name__ == '__main__':
     conn = get_db_connection()

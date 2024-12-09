@@ -51,13 +51,22 @@ CREATE TABLE Inventory (
 CREATE TABLE Transaction (
             transaction_id INT,
             customer_id INT,
+            employee_id INT, 
             product_id INT,
             quantity INT NOT NULL,
             date DATE NOT NULL,
             PRIMARY KEY (transaction_id),
             FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
             FOREIGN KEY (product_id) REFERENCES Product(product_id)
+            FOREIGN KEY (employee_id) REFERENCES Employee(employee_id)
 );
+
+CREATE TABLE Employee (
+            employee_id INT, 
+            name VARCHAR(100) NOT NULL
+            PRIMARY KEY (employee_id)      
+)
+
 
 
 

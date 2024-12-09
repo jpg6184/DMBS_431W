@@ -29,7 +29,7 @@ def displayInsertMenu():
     print('  5. Insert into Transaction')
     print('  6. Insert into Discount')
     print('  7. Insert into Loyalty Program')
-    print('  8. add ')
+    print('  8. Insert into Employee')
     print('  9. Back to Main Menu')
     print('----------------')
 
@@ -42,7 +42,7 @@ def displayUpdateMenu():
     print('  5. Update into Transaction')
     print('  6. Update into Discount')
     print('  7. Update into Loyalty Program')
-    print('  8. add ')
+    print('  8. Update into Employee ')
     print('  9. Back to Main Menu')
     print('----------------')
 
@@ -55,7 +55,7 @@ def displayDeleteMenu():
     print('  5. Delete into Transaction')
     print('  6. Delete into Discount')
     print('  7. Delete into Loyalty Program')
-    print('  8. add ')
+    print('  8. Delete into Employee ')
     print('  9. Back to Main Menu')
     print('----------------')
 
@@ -85,7 +85,8 @@ def runInsertMenu(conn):
             print("Inserting into Loyalty Program...")
             run_IUD.loyalty_program_insert(conn)
         elif n == '8':
-            print("TBD")
+            print("Inserting into Employee")
+            run_IUD.employee_insert
         elif n == '9':
             print("Returning to Main Menu...\n")
             displayMainMenu()
@@ -119,7 +120,8 @@ def runUpdateMenu(conn):
             print("Updating Loyalty Program...")
             run_IUD.loyalty_program_update(conn)
         elif n == '8':
-            print("TBD")
+            print("Updating into Employee")
+            run_IUD.employee_update
         elif n == '9':
             print("Returning to Main Menu...\n")
             displayMainMenu()
@@ -153,7 +155,8 @@ def runDeleteMenu(conn):
             print("Deleting Loyalty Program...")
             run_IUD.loyalty_program_delete(conn)
         elif n == '8':
-            print("TBD")
+            print("Deleting into Employee")
+            run_IUD.employee_delete(conn)
         elif n == '9':
             print("Returning to Main Menu...\n")
             displayMainMenu()
