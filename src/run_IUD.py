@@ -196,12 +196,16 @@ def create_user(conn):
     
     try:
         cursor.execute(sql_commands.insert_user_sql, values)
+        conn.commit()
         print(f"User '{username}' created successfully with role '{role}'.")
+        cursor.close()
+        return username, role
     except mysql.connector.Error as e:
         print(f"Error inserting user: {e}")
-    finally:
-        conn.commit()
         cursor.close()
+        return
+        
+        
 
 # Update Functions
 

@@ -19,6 +19,8 @@ USER_ROLE = ''
 # Manage requests to create a new database
 def create_database(db_name):
     """Function to create a new database."""
+    global USER_NAME
+    global USER_ROLE
     try:
         conn = mysql.connector.connect(
             host = DB_HOST,
@@ -40,13 +42,16 @@ def create_database(db_name):
             database = db_name
         )
         createTables(conn)
-        run_IUD.create_user(conn)
+        result = run_IUD.create_user(conn)
+        if result:
+            USER_NAME = result[0]
+            USER_ROLE = result[1]
+        conn.close()
         return False
     except mysql.connector.Error as e:
         print(f"Error creating database: {e}")
         return True
-    finally:
-        conn.close()
+        
 
 # Create connection to database
 def get_db_connection():
