@@ -14,12 +14,6 @@ CREATE TABLE Supplier (
             PRIMARY KEY (supplier_id)
         );
 
-CREATE TABLE Inventory (
-            product_id INT,
-            quantity INT NOT NULL,
-            PRIMARY KEY (product_id),
-            FOREIGN KEY (product_id) REFERENCES Product(product_id)
-        );
 
 CREATE TABLE Customer (
             customer_id INT,
@@ -27,18 +21,6 @@ CREATE TABLE Customer (
             email VARCHAR(100),
             total_spent DECIMAL(10, 2),
             PRIMARY KEY (customer_id)
-        );
-
-CREATE TABLE Transaction (
-            transaction_id INT,
-            customer_id INT,
-            product_id INT,
-            quantity INT NOT NULL,
-            date DATE NOT NULL,
-            SET profit = (selling_price - buying_price) * quantity,
-            PRIMARY KEY (transaction_id),
-            FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
-            FOREIGN KEY (product_id) REFERENCES Product(product_id)
         );
 
 CREATE TABLE Discount (
@@ -58,6 +40,24 @@ CREATE TABLE LoyaltyProgram (
             PRIMARY KEY (loyalty_id), 
             FOREIGN KEY (discount_id) REFERENCES Discount(discount_id)
         );
+
+CREATE TABLE Inventory (
+            product_id INT,
+            quantity INT NOT NULL,
+            PRIMARY KEY (product_id),
+            FOREIGN KEY (product_id) REFERENCES Product(product_id)
+        );
+
+CREATE TABLE Transaction (
+            transaction_id INT,
+            customer_id INT,
+            product_id INT,
+            quantity INT NOT NULL,
+            date DATE NOT NULL,
+            PRIMARY KEY (transaction_id),
+            FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+            FOREIGN KEY (product_id) REFERENCES Product(product_id)
+);
 
 
 
