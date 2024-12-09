@@ -17,7 +17,7 @@ def displayMainMenu():
     print('  2. Insert Value')
     print('  3. Update Value')
     print('  4. Delete Value')
-    print('  3. Exit')
+    print('  5. Exit')
     print('----------------')
 
 def displayInsertMenu():

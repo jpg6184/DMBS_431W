@@ -33,9 +33,14 @@ insert_transaction_sql = """
     VALUES (%s, %s, %s, %s, %s);
 """
 
-insert_empployee_sql = """
+insert_employee_sql = """
     INSERT INTO Employee (employee_id, name)
     VALUES (%s, %s);
+    """
+
+insert_user_sql = """
+    INSERT INTO Users (username, hashed_password, role)
+    VALUES (%s, %s, %s);
     """
 
 update_product_sql = """
