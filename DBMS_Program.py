@@ -1,7 +1,7 @@
 import mysql.connector
 import os
 import platform
-import Menus
+import menus
 
 # Setting database connection variables
 DB_HOST = 'localhost'
@@ -84,7 +84,7 @@ def run(conn):
         conn = update_db_settings()
     # Main menu loop
     while True:
-        Menus.displayMainMenu()
+        menus.displayMainMenu()
         n = input("Enter option: ")
         info = ""
         try:
@@ -99,14 +99,13 @@ def run(conn):
             createTables(conn)
         elif n == 2: 
             clear_screen()
-            Menus.runInsertMenu(conn)
+            menus.runInsertMenu(conn)
         elif n == 3: 
             clear_screen()
-            Menus.runUpdateMenu(conn)
-            
+            menus.runUpdateMenu(conn)
         elif n == 4: 
             clear_screen()
-            Menus.runDeleteMenu(conn)
+            menus.runDeleteMenu(conn)
         elif n == 5:
             clear_screen()
             print('Successfully Exited.')
