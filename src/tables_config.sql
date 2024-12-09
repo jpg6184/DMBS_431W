@@ -76,6 +76,22 @@ CREATE TABLE Users (
 );
 
 
+## Index to speed up querries
+
+# For faster joins and filtering by supplier
+CREATE INDEX idx_product_supplier_id ON Product(supplier_id);
+# For fast lookups and joins in Product 
+CREATE INDEX idx_inventory_product_id ON Inventory(product_id);
+# For faster lookups for low-stock items in Inventory 
+CREATE INDEX idx_inventory_product_id ON Inventory(product_id);
+# For faster lookups and joins in Transaction 
+CREATE INDEX idx_transaction_customer_id ON Transaction(customer_id);
+CREATE INDEX idx_transaction_product_id ON Transaction(product_id);
+# For faster lookups by customer email 
+CREATE INDEX idx_customer_email ON Customer(email);
+# For faster filtering and updates by product
+CREATE INDEX idx_discount_product_id ON Discount(product_id);
+
 
 
 
