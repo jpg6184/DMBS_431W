@@ -1,5 +1,6 @@
 import platform
 import os
+import run_IUD
 
 # Main menu display
 # Terminal clearing function
@@ -58,85 +59,104 @@ def displayDeleteMenu():
     print('  9. Back to Main Menu')
     print('----------------')
 
-# Insert Menu function
-# When run, displays menu options for Insert
 def runInsertMenu(conn):
     while True:
         displayInsertMenu()
         n = input("Enter option: ")
         if n == '1':
             print("Inserting into Product...")
+            run_IUD.prod_insert(conn)
         elif n == '2':
             print("Inserting into Supplier...")
+            run_IUD.supplier_insert(conn)
         elif n == '3':
             print("Inserting into Inventory...")
+            run_IUD.inventory_insert(conn)
         elif n == '4':
             print("Inserting into Customer...")
+            run_IUD.customer_insert(conn)
         elif n == '5':
             print("Inserting into Transaction...")
+            run_IUD.transaction_insert(conn)
         elif n == '6':
             print("Inserting into Discount...")
+            run_IUD.discount_insert(conn)
         elif n == '7':
             print("Inserting into Loyalty Program...")
+            run_IUD.loyalty_program_insert(conn)
         elif n == '8':
             print("TBD")
         elif n == '9':
             print("Returning to Main Menu...\n")
-            displayMainMenu
+            displayMainMenu()
             break
         else:
             print("Invalid input. Please try again.\n")
 
 def runUpdateMenu(conn):
     while True:
-        displayInsertMenu()
+        displayUpdateMenu()
         n = input("Enter option: ")
         if n == '1':
-            print("Updating into Product...")
+            print("Updating Product...")
+            run_IUD.prod_update(conn)
         elif n == '2':
-            print("Updating into Supplier...")
+            print("Updating Supplier...")
+            run_IUD.supplier_update(conn)
         elif n == '3':
-            print("Updating into Inventory...")
+            print("Updating Inventory...")
+            run_IUD.inventory_update(conn)
         elif n == '4':
-            print("Updating into Customer...")
+            print("Updating Customer...")
+            run_IUD.customer_update(conn)
         elif n == '5':
-            print("Updating into Transaction...")
+            print("Updating Transaction...")
+            run_IUD.transaction_update(conn)
         elif n == '6':
-            print("Updating into Discount...")
+            print("Updating Discount...")
+            run_IUD.discount_update(conn)
         elif n == '7':
-            print("Updating into Loyalty Program...")
+            print("Updating Loyalty Program...")
+            run_IUD.loyalty_program_update(conn)
         elif n == '8':
             print("TBD")
         elif n == '9':
             print("Returning to Main Menu...\n")
-            displayMainMenu
+            displayMainMenu()
             break
         else:
             print("Invalid input. Please try again.\n")
 
 def runDeleteMenu(conn):
     while True:
-        displayInsertMenu()
+        displayDeleteMenu()
         n = input("Enter option: ")
         if n == '1':
-            print("Deleting into Product...")
+            print("Deleting Product...")
+            run_IUD.prod_delete(conn)
         elif n == '2':
-            print("Deleting into Supplier...")
+            print("Deleting Supplier...")
+            run_IUD.supplier_delete(conn)
         elif n == '3':
-            print("Deleting into Inventory...")
+            print("Deleting Inventory...")
+            run_IUD.inventory_delete(conn)
         elif n == '4':
-            print("Deleting into Customer...")
+            print("Deleting Customer...")
+            run_IUD.customer_delete(conn)
         elif n == '5':
-            print("Deleting into Transaction...")
+            print("Deleting Transaction...")
+            run_IUD.transaction_delete(conn)
         elif n == '6':
-            print("Deleting into Discount...")
+            print("Deleting Discount...")
+            run_IUD.discount_delete(conn)
         elif n == '7':
-            print("Deleting into Loyalty Program...")
+            print("Deleting Loyalty Program...")
+            run_IUD.loyalty_program_delete(conn)
         elif n == '8':
             print("TBD")
         elif n == '9':
             print("Returning to Main Menu...\n")
-            displayMainMenu
+            displayMainMenu()
             break
         else:
             print("Invalid input. Please try again.\n")
