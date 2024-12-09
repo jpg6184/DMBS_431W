@@ -3,12 +3,17 @@ import os
 import platform
 import menu_handler
 import run_IUD
+import user
+import run_read
 
 # Setting database connection variables
 DB_HOST = 'localhost'
 DB_USER = 'user'
 DB_PASSWORD = 'password'
 DB_NAME = 'sampleDB'
+
+USER_NAME = ''
+USER_ROLE = ''
 
 # Manage requests to create a new database
 def create_database(db_name):
@@ -148,12 +153,23 @@ def createTables(conn):
 # Menu function
 # When run, displays menu options to a user
 def run(conn):
+    global USER_NAME
+    global USER_ROLE
     while conn is None:
         print("Please update variables:\n")
         conn = update_db_settings()
     # Main menu loop
+    while USER_NAME == '':
+        print("We don't know who you are.")
+        username = input("Enter username: ")
+        password = input("Enter password: ")
+        role = run_read.get_user_id(conn, username, password)
+        if role != None:
+            USER_NAME = username
+            USER_ROLE = role
     while True:
         clear_screen()
+        print(f"Current User Role: {USER_ROLE}")
         menu_handler.displayMainMenu()
         n = input("Enter option: ")
         info = ""

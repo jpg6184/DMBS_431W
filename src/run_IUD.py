@@ -166,7 +166,6 @@ def create_user(conn):
     else:
         # If the table is not empty, ask for admin credentials
         admin_password = input("Enter admin password: ")
-        hashed_admin_password = user.hash_password(admin_password)
         
         # Check if the provided admin password matches the stored password
         
@@ -178,7 +177,7 @@ def create_user(conn):
         
         result = cursor.fetchone()
         
-        if result and result[0] == hashed_admin_password:
+        if result and user.verify_password(admin_password, result[0]):
             # If the password is correct create user as admin
             print("Admin password verified.")
             username = input("Enter username: ")
