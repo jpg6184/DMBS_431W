@@ -1,6 +1,7 @@
 import platform
 import os
 import run_IUD
+import DBMS_Program
 
 # Main menu display
 # Terminal clearing function
@@ -20,6 +21,15 @@ def displayMainMenu():
     print('  5. Exit')
     print('----------------')
 
+def displaySettingsMenu():
+    print('----SETTINGS----')
+    print('  1. Update Database Connection')
+    print('  2. Add User')
+    print('  3. Update User')
+    print('  4. Delete User')
+    print('  5. Exit')
+    print('----------------')
+
 def displayInsertMenu():
     print('------INSERT MENU------')
     print('  1. Insert into Product')
@@ -34,7 +44,7 @@ def displayInsertMenu():
     print('----------------')
 
 def displayUpdateMenu():
-    print('------INSERT MENU------')
+    print('------UPDATE MENU------')
     print('  1. Update into Product')
     print('  2. Update into Supplier')
     print('  3. Update into Inventory')
@@ -47,15 +57,15 @@ def displayUpdateMenu():
     print('----------------')
 
 def displayDeleteMenu():
-    print('------INSERT MENU------')
-    print('  1. Delete into Product')
-    print('  2. Delete into Supplier')
-    print('  3. Delete into Inventory')
-    print('  4. Delete into Customer')
-    print('  5. Delete into Transaction')
-    print('  6. Delete into Discount')
-    print('  7. Delete into Loyalty Program')
-    print('  8. Delete into Employee ')
+    print('------DELETE MENU------')
+    print('  1. Delete from Product')
+    print('  2. Delete from Supplier')
+    print('  3. Delete from Inventory')
+    print('  4. Delete from Customer')
+    print('  5. Delete from Transaction')
+    print('  6. Delete from Discount')
+    print('  7. Delete from Loyalty Program')
+    print('  8. Delete from Employee ')
     print('  9. Back to Main Menu')
     print('----------------')
 
@@ -89,7 +99,7 @@ def runInsertMenu(conn):
             run_IUD.employee_insert
         elif n == '9':
             print("Returning to Main Menu...\n")
-            displayMainMenu()
+            #displayMainMenu()
             break
         else:
             print("Invalid input. Please try again.\n")
@@ -164,5 +174,15 @@ def runDeleteMenu(conn):
         else:
             print("Invalid input. Please try again.\n")
 
+def runSettingsMenu(conn):
+    while True:
+        displaySettingsMenu()
+        n = input("Enter Option: ")
+        if n == '1':
+            conn = DBMS_Program.update_db_settings()
+        elif n == '5':
+            break
+        else:
+            print('Invalid input. Please try again')
 
-
+    return conn

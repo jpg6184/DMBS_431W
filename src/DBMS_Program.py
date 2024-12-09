@@ -10,6 +10,7 @@ DB_USER = 'user'
 DB_PASSWORD = 'password'
 DB_NAME = 'sampleDB'
 
+# Manage requests to create a new database
 def create_database(db_name):
     """Function to create a new database."""
     try:
@@ -124,18 +125,19 @@ def createTables(conn):
 
         # Create table
         sql = read_sql_from_file('tables_config.sql')
-        for result in cursor.execute(sql, multi=True):  # Use multi=True for multiple statements
-            if result.with_rows:  # Check if there are results
+        for result in cursor.execute(sql, multi=True): 
+            # Consume any results before committing
+            if result.with_rows: 
                 print(result)
-                result.fetchall()  # Consume any res
+                result.fetchall() 
         conn.commit()
-        #conn.commit()
-        print('----SUCCESS----.')
+        
+        print('----SUCCESS----')
 
     except mysql.connector.Error as e:
         print(f"----FAILURE----")
 
-    # Ensure the cursor is closed
+    # Ensure cursor is closed
     finally:
         
         if cursor:
@@ -151,6 +153,7 @@ def run(conn):
         conn = update_db_settings()
     # Main menu loop
     while True:
+        clear_screen()
         menu_handler.displayMainMenu()
         n = input("Enter option: ")
         info = ""
@@ -160,7 +163,7 @@ def run(conn):
             info = "Invalid input. Please enter a number.\n"
         if n == 0:
             clear_screen()
-            conn = update_db_settings()  # Update connection
+            conn = menu_handler.runSettingsMenu(conn)  # Update connection
         elif n == 1:
             clear_screen()
             createTables(conn)
