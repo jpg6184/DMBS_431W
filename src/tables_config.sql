@@ -1,3 +1,4 @@
+## Create a set of database tables and define relationships between them
 CREATE TABLE Supplier (
             supplier_id INT,
             name VARCHAR(100) NOT NULL,
@@ -80,8 +81,6 @@ CREATE TABLE Users (
 
 # For faster joins and filtering by supplier
 CREATE INDEX idx_product_supplier_id ON Product(supplier_id);
-# For fast lookups and joins in Product 
-CREATE INDEX idx_inventory_product_id ON Inventory(product_id);
 # For faster lookups for low-stock items in Inventory 
 CREATE INDEX idx_inventory_product_id ON Inventory(product_id);
 # For faster lookups and joins in Transaction 

@@ -4,12 +4,13 @@ import platform
 import menu_handler
 import run_IUD
 import user
+
 import run_read
 
 # Setting database connection variables
 DB_HOST = 'localhost'
-DB_USER = 'user'
-DB_PASSWORD = 'password'
+DB_USER = 'root'
+DB_PASSWORD = '12345678'
 DB_NAME = 'sampleDB'
 
 USER_NAME = ''
