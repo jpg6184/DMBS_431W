@@ -1,5 +1,4 @@
 import sql_commands
-import user
 import mysql.connector
 
 def get_input(prompt, expected_type):
@@ -141,71 +140,14 @@ def employee_insert(conn):
     name = input("Enter employee name: ")
 
     cursor = conn.cursor()
-    cursor.execute(sql_commands.insert_employee_sql, (employee_id, name))
-    conn.commit()
-    print(f"Transaction with ID {employee_id} inserted successfully.")
-
-def create_user(conn):
-    # Check if the users table is empty
-    cursor = conn.cursor()
     try:
-        cursor.execute("SELECT COUNT(*) FROM users")
+        cursor.execute(sql_commands.insert_employee_sql, (employee_id, name))
+        conn.commit()
+        print(f"Transaction with ID {employee_id} inserted successfully.")        
     except mysql.connector.Error as e:
         print(f"Error: {e}")
-        return
-    result = cursor.fetchone()
-    
-    if result[0] == 0:
-        # If table is empty then allow first user to be an admin
-        print("No users found. The first user will be an admin.")
-        username = input("Enter username: ")
-        password = input("Enter password: ")
-        hashed_password = user.hash_password(password)
-        role = "admin"
-        print(f"Creating admin user: {username}")
-    else:
-        # If the table is not empty, ask for admin credentials
-        admin_password = input("Enter admin password: ")
-        
-        # Check if the provided admin password matches the stored password
-        
-        try:
-            cursor.execute("SELECT hashed_password FROM users WHERE id = 1")
-        except mysql.connector.Error as e:
-            print(f"Error: {e}")
-            return
-        
-        result = cursor.fetchone()
-        
-        if result and user.verify_password(admin_password, result[0]):
-            # If the password is correct create user as admin
-            print("Admin password verified.")
-            username = input("Enter username: ")
-            password = input("Enter password: ")
-            hashed_password = user.hash_password(password)
-            role = "admin"
-        else:
-            # If the password is incorrect, assign user as a guest
-            print("Incorrect admin password. Creating user as guest.")
-            username = input("Enter username: ")
-            password = input("Enter password: ")
-            hashed_password = user.hash_password(password)
-            role = "guest"
-
-    values = (username, hashed_password, role)
-    
-    try:
-        cursor.execute(sql_commands.insert_user_sql, values)
-        conn.commit()
-        print(f"User '{username}' created successfully with role '{role}'.")
+    finally:
         cursor.close()
-        return username, role
-    except mysql.connector.Error as e:
-        print(f"Error inserting user: {e}")
-        cursor.close()
-        return
-        
-        
 
 # Update Functions
 

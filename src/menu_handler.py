@@ -2,6 +2,7 @@ import platform
 import os
 import run_IUD
 import DBMS_Program
+import user
 
 # Main menu display
 # Terminal clearing function
@@ -25,9 +26,8 @@ def displaySettingsMenu():
     print('----SETTINGS----')
     print('  1. Update Database Connection')
     print('  2. Add User')
-    print('  3. Update User')
-    print('  4. Delete User')
-    print('  5. Exit')
+    print('  3. Change Current User')
+    print('  4. Exit')
     print('----------------')
 
 def displayInsertMenu():
@@ -174,13 +174,17 @@ def runDeleteMenu(conn):
         else:
             print("Invalid input. Please try again.\n")
 
-def runSettingsMenu(conn):
+def runSettingsMenu(conn, curr_user):
     while True:
         displaySettingsMenu()
         n = input("Enter Option: ")
         if n == '1':
-            conn = DBMS_Program.update_db_settings()
-        elif n == '5':
+            conn = DBMS_Program.update_db_settings(curr_user)
+        elif n == '2':
+            user.create_user(conn)
+        elif n == '3':
+            user.change_user(conn, curr_user)
+        elif n == '4':
             break
         else:
             print('Invalid input. Please try again')

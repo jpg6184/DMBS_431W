@@ -2,25 +2,35 @@ import mysql.connector
 import os
 import platform
 import menu_handler
-import run_IUD
 import user
-
-import run_read
 
 # Setting database connection variables
 DB_HOST = 'localhost'
-DB_USER = 'root'
-DB_PASSWORD = '12345678'
+DB_USER = 'user'
+DB_PASSWORD = 'password'
 DB_NAME = 'sampleDB'
 
-USER_NAME = ''
-USER_ROLE = ''
+
+class User:
+    def __init__(self, username='', role=''):
+        self.USER_NAME = username
+        self.USER_ROLE = role
+
+    def get_username(self):
+        return self.USER_NAME
+
+    def get_role(self):
+        return self.USER_ROLE
+
+    def update_user(self, username, role):
+        self.USER_NAME = username
+        self.USER_ROLE = role
+        print(f"Updated username: {self.USER_NAME}, Updated role: {self.USER_ROLE}")
+
 
 # Manage requests to create a new database
-def create_database(db_name):
+def create_database(db_name, curr_user):
     """Function to create a new database."""
-    global USER_NAME
-    global USER_ROLE
     try:
         conn = mysql.connector.connect(
             host = DB_HOST,
@@ -42,10 +52,9 @@ def create_database(db_name):
             database = db_name
         )
         createTables(conn)
-        result = run_IUD.create_user(conn)
+        result = user.create_user(conn)
         if result:
-            USER_NAME = result[0]
-            USER_ROLE = result[1]
+            curr_user.update_user(result[0], result[1])
         conn.close()
         return False
     except mysql.connector.Error as e:
@@ -53,8 +62,9 @@ def create_database(db_name):
         return True
         
 
+
 # Create connection to database
-def get_db_connection():
+def get_db_connection(curr_user = ''):
     global DB_NAME  # Access the global variable to modify it if necessary
     
     print(f"Current database is {DB_NAME}")
@@ -65,7 +75,7 @@ def get_db_connection():
             while running:
                 create_new_db = input(f"Do you want to create a new database '{DB_NAME}'? (y/n): ")
                 if create_new_db == 'y' or create_new_db == 'Y':
-                    running = create_database(DB_NAME)
+                    running = create_database(DB_NAME, curr_user)
                 elif create_new_db == 'n' or create_new_db == 'N':
                     running = False
             
@@ -104,7 +114,7 @@ def clear_screen():
     else:
         os.system("clear")
 
-def update_db_settings():
+def update_db_settings(curr_user):
     global DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
     
     print("------ Update Database Settings ------\n(Leave blank for same)")
@@ -115,7 +125,7 @@ def update_db_settings():
 
     clear_screen()
     print(f"\nUpdated settings: \nHost: {DB_HOST}\nUser: {DB_USER}\nPassword: {DB_PASSWORD}\nDatabase: {DB_NAME}\n")
-    return get_db_connection()
+    return get_db_connection(curr_user)
 
 
 def read_sql_from_file(file_path):
@@ -159,23 +169,22 @@ def createTables(conn):
 # Menu function
 # When run, displays menu options to a user
 def run(conn):
-    global USER_NAME
-    global USER_ROLE
+    curr_user = User()
     while conn is None:
         print("Please update variables:\n")
-        conn = update_db_settings()
+        conn = update_db_settings(curr_user)
     # Main menu loop
-    while USER_NAME == '':
-        print("We don't know who you are.")
+    count = 0
+    while curr_user.get_username() == '':
+        print("We don't know who you are, please enter in your login details.")
         username = input("Enter username: ")
         password = input("Enter password: ")
-        role = run_read.get_user_id(conn, username, password)
+        role = user.get_user_id(conn, username, password)
         if role != None:
-            USER_NAME = username
-            USER_ROLE = role
+            curr_user.update_user(username, role)
     while True:
-        clear_screen()
-        print(f"Current User Role: {USER_ROLE}")
+        print(f"Current User Role: {curr_user.get_role()}")
+        print(f"Current Username: {curr_user.get_username()}\n")
         menu_handler.displayMainMenu()
         n = input("Enter option: ")
         info = ""
@@ -185,19 +194,31 @@ def run(conn):
             info = "Invalid input. Please enter a number.\n"
         if n == 0:
             clear_screen()
-            conn = menu_handler.runSettingsMenu(conn)  # Update connection
+            conn = menu_handler.runSettingsMenu(conn, curr_user)  # Update connection
         elif n == 1:
-            clear_screen()
-            createTables(conn)
+            if curr_user.get_role() == 'admin':
+                clear_screen()
+                createTables(conn)
+            else:
+                print('You need admin access to perform this task.')
         elif n == 2: 
-            clear_screen()
-            menu_handler.runInsertMenu(conn)
+            if curr_user.get_role() == 'admin':
+                clear_screen()
+                menu_handler.runInsertMenu(conn)
+            else:
+                print('You need admin access to perform this task.')
         elif n == 3: 
-            clear_screen()
-            menu_handler.runUpdateMenu(conn)
+            if curr_user.get_role() == 'admin':
+                clear_screen()
+                menu_handler.runUpdateMenu(conn)
+            else:
+                print('You need admin access to perform this task.')
         elif n == 4: 
-            clear_screen()
-            menu_handler.runDeleteMenu(conn)
+            if curr_user.get_role() == 'admin':
+                clear_screen()
+                menu_handler.runDeleteMenu(conn)
+            else:
+                print('You need admin access to perform this task.')
         elif n == 5:
             clear_screen()
             print('Successfully Exited.')
