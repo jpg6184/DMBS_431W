@@ -9,8 +9,8 @@ insert_supplier_sql = """
 """
 
 insert_customer_sql = """
-    INSERT INTO Customer (customer_id, name, email, total_spent)
-    VALUES (%s, %s, %s, %s);
+    INSERT INTO Customer (customer_id, name, email)
+    VALUES (%s, %s, %s);
 """
 
 insert_discount_sql = """
@@ -138,9 +138,12 @@ view_products_sql = """
 
 view_products_by_supplier_sql = """
     SELECT p.product_id, p.name AS product_name, s.name AS supplier_name, p.buying_price, p.selling_price
-    FROM Product p
-    JOIN Supplier s ON p.supplier_id = s.supplier_id
-    ORDER BY s.name, p.product_id;
+    FROM 
+        Product p
+    JOIN 
+        Supplier s ON p.supplier_id = s.supplier_id
+    ORDER BY   
+        s.name, p.product_id;
 """
 
 view_suppliers_sql = """
@@ -169,4 +172,64 @@ view_transactions_by_customer = """
         c.customer_id, p.product_id
     ORDER BY
         c.name, p.name;
+"""
+
+view_low_stock = """
+    SELECT 
+        p.name AS product_name,
+        i.quantity AS stock_quantity
+    FROM 
+        Inventory i
+    JOIN 
+        Product p ON i.product_id = p.product_id
+    WHERE 
+        i.quantity < 10
+    ORDER BY 
+        i.quantity ASC;
+"""
+
+view_product_by_revenue = """
+    SELECT 
+        p.name AS product_name,
+        SUM(t.quantity) AS total_quantity_sold,
+        SUM(t.quantity * p.selling_price) AS total_revenue
+    FROM 
+        Transaction t
+    JOIN 
+        Product p ON t.product_id = p.product_id
+    GROUP BY 
+        p.product_id
+    ORDER BY 
+        total_revenue DESC;
+"""
+
+view_employee_by_sales = """
+    SELECT 
+        e.name AS employee_name,
+        COUNT(t.transaction_id) AS total_transactions,
+        SUM(t.quantity * p.selling_price) AS total_sales
+    FROM 
+        Transaction t
+    JOIN 
+        Employee e ON t.employee_id = e.employee_id
+    JOIN 
+        Product p ON t.product_id = p.product_id
+    GROUP BY 
+        e.employee_id
+    ORDER BY 
+        total_sales DESC;
+"""
+
+view_transaction_count_by_customer = """
+    SELECT 
+        c.name AS customer_name,
+        COUNT(DISTINCT t.transaction_id) AS total_purchases
+    FROM 
+        Customer c
+    JOIN 
+        Transaction t ON c.customer_id = t.customer_id
+    GROUP BY 
+        c.customer_id
+    ORDER BY 
+        total_purchases DESC;
 """

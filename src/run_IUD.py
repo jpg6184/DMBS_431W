@@ -55,11 +55,10 @@ def customer_insert(conn):
     customer_id = get_input("Enter customer ID to insert: ", int)
     name = input("Enter customer name: ")
     email = input("Enter customer email: ")
-    total_spent = get_input("Enter total spent: ", float)
     
     cursor = conn.cursor()
     try:
-        cursor.execute(sql_commands.insert_customer_sql, (customer_id, name, email, total_spent))
+        cursor.execute(sql_commands.insert_customer_sql, (customer_id, name, email))
         conn.commit()
         print(f"Customer with ID {customer_id} inserted successfully.")
     except mysql.connector.Error as e:

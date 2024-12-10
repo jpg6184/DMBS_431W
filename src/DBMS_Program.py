@@ -64,7 +64,7 @@ def create_database(db_name, curr_user):
 
 
 # Create connection to database
-def get_db_connection(curr_user = ''):
+def get_db_connection(curr_user = User()):
     global DB_NAME  # Access the global variable to modify it if necessary
     
     print(f"Current database is {DB_NAME}")
@@ -168,8 +168,7 @@ def createTables(conn):
 
 # Menu function
 # When run, displays menu options to a user
-def run(conn):
-    curr_user = User()
+def run(conn, curr_user):
     while conn is None:
         print("Please update variables:\n")
         conn = update_db_settings(curr_user)
@@ -233,6 +232,6 @@ def run(conn):
 
 
 if __name__ == '__main__':
-
-    conn = get_db_connection()
-    run(conn)
+    curr_user = User()
+    conn = get_db_connection(curr_user)
+    run(conn, curr_user)

@@ -19,7 +19,7 @@ CREATE TABLE Customer (
             customer_id INT,
             name VARCHAR(35) NOT NULL,
             email VARCHAR(35),
-            total_spent DECIMAL(10, 2),
+            total_spent DECIMAL(10, 2) DEFAULT 0,
             PRIMARY KEY (customer_id)
 );
 

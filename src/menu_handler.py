@@ -76,8 +76,13 @@ def displayQueryMenu():
     print('  1. View Products (Admin)')
     print('  2. View Suppliers (Admin)')
     print('  3. View Transactions (Admin)')
-    print('  4. View Transactions by Customer')
-    print('  5. Back to Main Menu')
+    print('  4. View Products by Supplier')
+    print('  5. View Transactions by Customer')
+    print('  6. View Products with Low Stock')
+    print('  7. View Products by Total Revenue')
+    print('  8. View Employees by Total Sales')
+    print('  9. View Transaction Counts by Customer')
+    print('  0. Back to Main Menu')
     print('----------------')
 
 def runInsertMenu(conn):
@@ -208,7 +213,7 @@ def runQueryMenu(conn, curr_user):
         n = input("Enter option: ")
         if n == '1':
             if curr_user.get_role() == 'admin':
-                print("Displaying products by supplier...\n")
+                print("Displaying all products...\n")
                 run_query.run_query_view_products(conn)
             else:
                 print('You need admin access to perform this task.')
@@ -225,9 +230,24 @@ def runQueryMenu(conn, curr_user):
             else:
                 print('You need admin access to perform this task.')
         elif n == '4':
-            print("Displaying transactions by customer...\n")
-            run_query.run_query_transactions_by_customer(conn) 
+            print("Displaying products by supplier...\n")
+            run_query.run_query_view_products_by_supplier(conn)     
         elif n == '5':
+            print("Displaying transactions by customer...\n")
+            run_query.run_query_transactions_by_customer(conn)
+        elif n == '6':
+            print("Displaying products with low stock...\n")
+            run_query.run_query_view_low_stock(conn)
+        elif n == '7':
+            print("Displaying products by total revenue...\n")
+            run_query.run_query_view_product_by_revenue(conn)
+        elif n == '8':
+            print("Displaying employees ranked by total sales...\n")
+            run_query.run_query_view_employee_by_sales(conn)
+        elif n == '9':
+            print("Displaying transaction counts by customer...\n")
+            run_query.run_query_view_transaction_count_by_customer(conn)
+        elif n == '0':
             print("Returning to Main Menu...\n")
             break
         else:
