@@ -65,3 +65,19 @@ def run_query_view_products_by_supplier(conn):
         print(f"Error: {e}")
     finally:
         cursor.close()
+
+def run_query_transactions_by_customer(conn):
+    cursor = conn.cursor()
+    try:
+        cursor.execute(sql_commands.view_transactions_by_customer)
+        transactions = cursor.fetchall()
+
+        # Prepare headers for the table
+        headers = ["Customer Name", "Product Name", "Total Price"]
+        
+        # Format the results into a table
+        print(tabulate(transactions, headers=headers, tablefmt="grid"))
+    except mysql.connector.Error as e:
+        print(f"Error: {e}")
+    finally:
+        cursor.close()

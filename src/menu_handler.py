@@ -16,10 +16,10 @@ def clear_screen():
 def displayMainMenu():
     print('------MENU------')
     print('  0. Settings')
-    print('  1. Create Tables')
-    print('  2. Insert Value')
-    print('  3. Update Value')
-    print('  4. Delete Value')
+    print('  1. Create Tables (Admin)')
+    print('  2. Insert Value (Admin)')
+    print('  3. Update Value (Admin)')
+    print('  4. Delete Value (Admin)')
     print('  5. Queries')
     print('  6. Exit')
     print('----------------')
@@ -73,10 +73,11 @@ def displayDeleteMenu():
 
 def displayQueryMenu():
     print('------QUERY MENU------')
-    print('  1. View Products')
-    print('  2. View Suppliers')
-    print('  3. View Transactions')
-    print('  4. Back to Main Menu')
+    print('  1. View Products (Admin)')
+    print('  2. View Suppliers (Admin)')
+    print('  3. View Transactions (Admin)')
+    print('  4. View Transactions by Customer')
+    print('  5. Back to Main Menu')
     print('----------------')
 
 def runInsertMenu(conn):
@@ -201,20 +202,32 @@ def runSettingsMenu(conn, curr_user):
 
     return conn
 
-def runQueryMenu(conn):
+def runQueryMenu(conn, curr_user):
     while True:
         displayQueryMenu()  # Display menu options
         n = input("Enter option: ")
         if n == '1':
-            print("Displaying products by supplier...\n")
-            run_query.run_query_view_products(conn)
+            if curr_user.get_role() == 'admin':
+                print("Displaying products by supplier...\n")
+                run_query.run_query_view_products(conn)
+            else:
+                print('You need admin access to perform this task.')
         elif n == '2':
-            print("Displaying all suppliers...\n")
-            run_query.run_query_view_suppliers(conn)
+            if curr_user.get_role() == 'admin':
+                print("Displaying all suppliers...\n")
+                run_query.run_query_view_suppliers(conn)
+            else:
+                print('You need admin access to perform this task.')
         elif n == '3':
-            print("Displaying all transactions...\n")
-            run_query.run_query_view_transactions(conn)
+            if curr_user.get_role() == 'admin':
+                print("Displaying all transactions...\n")
+                run_query.run_query_view_transactions(conn)
+            else:
+                print('You need admin access to perform this task.')
         elif n == '4':
+            print("Displaying transactions by customer...\n")
+            run_query.run_query_transactions_by_customer(conn) 
+        elif n == '5':
             print("Returning to Main Menu...\n")
             break
         else:

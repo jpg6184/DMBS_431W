@@ -153,3 +153,20 @@ view_transactions_sql = """
     SELECT transaction_id, customer_id, product_id, date
     FROM Transaction;
 """
+
+view_transactions_by_customer = """
+    SELECT
+        c.name AS customer_name,
+        p.name AS product_name,
+        SUM(t.quantity * p.selling_price) AS total_price
+    FROM
+        Transaction t
+    JOIN
+        Customer c ON t.customer_id = c.customer_id
+    JOIN
+        Product p ON t.product_id = p.product_id
+    GROUP BY
+        c.customer_id, p.product_id
+    ORDER BY
+        c.name, p.name;
+"""
