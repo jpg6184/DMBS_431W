@@ -233,3 +233,59 @@ view_transaction_count_by_customer = """
     ORDER BY 
         total_purchases DESC;
 """
+
+view_profit_margins = """
+    SELECT 
+        p.name AS product_name,
+        p.selling_price - p.buying_price AS profit_margin,
+        (p.selling_price - p.buying_price) / p.selling_price * 100 AS profit_margin_percentage
+    FROM 
+        Product p
+    ORDER BY 
+        profit_margin_percentage DESC;
+"""
+
+view_highest_discounts = """
+    SELECT 
+        p.name AS product_name,
+        AVG(d.discount_percentage) AS avg_discount
+    FROM 
+        Discount d
+    JOIN 
+        Product p ON d.product_id = p.product_id
+    GROUP BY 
+        p.product_id
+    ORDER BY 
+        avg_discount DESC
+    LIMIT 10;
+
+"""
+
+view_customers_by_spending = """
+    SELECT 
+        c.name AS customer_name,
+        SUM(t.quantity * p.selling_price) AS total_spent
+    FROM 
+        Customer c
+    JOIN 
+        Transaction t ON c.customer_id = t.customer_id
+    JOIN 
+        Product p ON t.product_id = p.product_id
+    GROUP BY 
+        c.customer_id
+    ORDER BY 
+        total_spent DESC
+    LIMIT 10;
+"""
+view_inventory_value = """
+    SELECT 
+        p.name AS product_name,
+        i.quantity AS stock_quantity,
+        i.quantity * p.buying_price AS inventory_value
+    FROM 
+        Product p
+    JOIN 
+        Inventory i ON p.product_id = i.product_id
+    ORDER BY 
+        inventory_value DESC;
+"""

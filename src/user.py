@@ -12,25 +12,6 @@ def hash_password(password):
 def verify_password(plain_password, hashed_password):
     return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
-def print_current_username(conn, id):
-    try:
-        cursor = conn.cursor()
-        # Assuming USER_ID is the current user's id (this should be set when the user logs in)
-        cursor.execute("SELECT username FROM users WHERE id = %s", (id,))
-        result = cursor.fetchone()
-        
-        if result:
-            print(f"Username: {result[0]}")
-        else:
-            print("User not found.")
-            return None
-    except mysql.connector.Error as e:
-        print(f"Error fetching current username: {e}")
-        return None
-    finally:
-        cursor.close()
-
-
 def create_user(conn):
     # Check if the users table is empty
     cursor = conn.cursor()
@@ -54,7 +35,6 @@ def create_user(conn):
         admin_password = input("Enter admin password: ")
         
         # Check if the provided admin password matches the stored password
-        
         try:
             cursor.execute("SELECT hashed_password FROM users WHERE id = 1")
         except mysql.connector.Error as e:

@@ -82,6 +82,24 @@ def displayQueryMenu():
     print('  7. View Products by Total Revenue')
     print('  8. View Employees by Total Sales')
     print('  9. View Transaction Counts by Customer')
+    print(' 10. View Profit Margins')
+    print(' 11. View Products with Highest Discounts')
+    print(' 12. View Top Customers by Spending')
+    print(' 13. View Inventory Value')
+    print('  0. Back to Main Menu')
+    print('----------------')
+
+def displayTransactionMenu():
+    print('------TRANSACTION MENU------')
+    print('  1. Add Transaction')
+    print('  2. View Suppliers (Admin)')
+    print('  3. View Transactions (Admin)')
+    print('  4. View Products by Supplier')
+    print('  5. View Transactions by Customer')
+    print('  6. View Products with Low Stock')
+    print('  7. View Products by Total Revenue')
+    print('  8. View Employees by Total Sales')
+    print('  9. View Transaction Counts by Customer')
     print('  0. Back to Main Menu')
     print('----------------')
 
@@ -247,6 +265,18 @@ def runQueryMenu(conn, curr_user):
         elif n == '9':
             print("Displaying transaction counts by customer...\n")
             run_query.run_query_view_transaction_count_by_customer(conn)
+        elif n == '10':
+            print("Displaying profit margins...\n")
+            run_query.run_query_view_profit_margins(conn)
+        elif n == '11':
+            print("Displaying products with highest discounts...\n")
+            run_query.run_query_view_highest_discounts(conn)
+        elif n == '12':
+            print("Displaying top customers by spending...\n")
+            run_query.run_query_view_customers_by_spending(conn)
+        elif n == '13':
+            print("Displaying inventory value...\n")
+            run_query.run_query_view_inventory_value(conn)
         elif n == '0':
             print("Returning to Main Menu...\n")
             break

@@ -115,3 +115,54 @@ def run_query_view_transaction_count_by_customer(conn):
         print(f"Error: {e}")
     finally:
         cursor.close()
+
+from tabulate import tabulate
+import mysql.connector
+
+def run_query_view_profit_margins(conn):
+    cursor = conn.cursor()
+    try:
+        cursor.execute(sql_commands.view_profit_margins)
+        profit_margins = cursor.fetchall()
+        headers = ["Product Name", "Profit Margin", "Profit Margin Percentage (%)"]
+        print(tabulate(profit_margins, headers=headers, tablefmt="grid"))
+    except mysql.connector.Error as e:
+        print(f"Error: {e}")
+    finally:
+        cursor.close()
+
+def run_query_view_highest_discounts(conn):
+    cursor = conn.cursor()
+    try:
+        cursor.execute(sql_commands.view_highest_discounts)
+        highest_discounts = cursor.fetchall()
+        headers = ["Product Name", "Average Discount (%)"]
+        print(tabulate(highest_discounts, headers=headers, tablefmt="grid"))
+    except mysql.connector.Error as e:
+        print(f"Error: {e}")
+    finally:
+        cursor.close()
+
+def run_query_view_customers_by_spending(conn):
+    cursor = conn.cursor()
+    try:
+        cursor.execute(sql_commands.view_customers_by_spending)
+        customers_by_spending = cursor.fetchall()
+        headers = ["Customer Name", "Total Spent"]
+        print(tabulate(customers_by_spending, headers=headers, tablefmt="grid"))
+    except mysql.connector.Error as e:
+        print(f"Error: {e}")
+    finally:
+        cursor.close()
+
+def run_query_view_inventory_value(conn):
+    cursor = conn.cursor()
+    try:
+        cursor.execute(sql_commands.view_inventory_value)
+        inventory_value = cursor.fetchall()
+        headers = ["Product Name", "Stock Quantity", "Inventory Value"]
+        print(tabulate(inventory_value, headers=headers, tablefmt="grid"))
+    except mysql.connector.Error as e:
+        print(f"Error: {e}")
+    finally:
+        cursor.close()
