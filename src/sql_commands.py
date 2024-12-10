@@ -130,3 +130,26 @@ delete_employee_sql = """
     DELETE FROM Employee
     WHERE employee_id = %s;
 """
+
+view_products_sql = """
+    SELECT product_id, name, supplier_id, buying_price, selling_price
+    FROM Product;
+"""
+
+view_products_by_supplier_sql = """
+    SELECT p.product_id, p.name AS product_name, s.name AS supplier_name, p.buying_price, p.selling_price
+    FROM Product p
+    JOIN Supplier s ON p.supplier_id = s.supplier_id
+    ORDER BY s.name, p.product_id;
+"""
+
+view_suppliers_sql = """
+    SELECT supplier_id, name, phone_number
+    FROM Supplier;
+"""
+
+
+view_transactions_sql = """
+    SELECT transaction_id, customer_id, product_id, date
+    FROM Transaction;
+"""

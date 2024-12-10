@@ -221,6 +221,9 @@ def run(conn):
                 print('You need admin access to perform this task.')
         elif n == 5:
             clear_screen()
+            menu_handler.runQueryMenu(conn)
+        elif n == 6:
+            clear_screen()
             print('Successfully Exited.')
             break  # Exit the loop
         else:

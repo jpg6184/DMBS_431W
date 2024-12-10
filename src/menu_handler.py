@@ -3,6 +3,7 @@ import os
 import run_IUD
 import DBMS_Program
 import user
+import run_query
 
 # Main menu display
 # Terminal clearing function
@@ -19,7 +20,8 @@ def displayMainMenu():
     print('  2. Insert Value')
     print('  3. Update Value')
     print('  4. Delete Value')
-    print('  5. Exit')
+    print('  5. Queries')
+    print('  6. Exit')
     print('----------------')
 
 def displaySettingsMenu():
@@ -69,6 +71,14 @@ def displayDeleteMenu():
     print('  9. Back to Main Menu')
     print('----------------')
 
+def displayQueryMenu():
+    print('------QUERY MENU------')
+    print('  1. View Products')
+    print('  2. View Suppliers')
+    print('  3. View Transactions')
+    print('  4. Back to Main Menu')
+    print('----------------')
+
 def runInsertMenu(conn):
     while True:
         displayInsertMenu()
@@ -95,7 +105,7 @@ def runInsertMenu(conn):
             print("Inserting into Loyalty Program...")
             run_IUD.loyalty_program_insert(conn)
         elif n == '8':
-            print("Inserting into Employee")
+            print("Inserting into Employee...")
             run_IUD.employee_insert
         elif n == '9':
             print("Returning to Main Menu...\n")
@@ -130,7 +140,7 @@ def runUpdateMenu(conn):
             print("Updating Loyalty Program...")
             run_IUD.loyalty_program_update(conn)
         elif n == '8':
-            print("Updating into Employee")
+            print("Updating Employee...")
             run_IUD.employee_update
         elif n == '9':
             print("Returning to Main Menu...\n")
@@ -165,7 +175,7 @@ def runDeleteMenu(conn):
             print("Deleting Loyalty Program...")
             run_IUD.loyalty_program_delete(conn)
         elif n == '8':
-            print("Deleting into Employee")
+            print("Deleting Employee...")
             run_IUD.employee_delete(conn)
         elif n == '9':
             print("Returning to Main Menu...\n")
@@ -190,3 +200,22 @@ def runSettingsMenu(conn, curr_user):
             print('Invalid input. Please try again')
 
     return conn
+
+def runQueryMenu(conn):
+    while True:
+        displayQueryMenu()  # Display menu options
+        n = input("Enter option: ")
+        if n == '1':
+            print("Displaying products by supplier...\n")
+            run_query.run_query_view_products(conn)
+        elif n == '2':
+            print("Displaying all suppliers...\n")
+            run_query.run_query_view_suppliers(conn)
+        elif n == '3':
+            print("Displaying all transactions...\n")
+            run_query.run_query_view_transactions(conn)
+        elif n == '4':
+            print("Returning to Main Menu...\n")
+            break
+        else:
+            print("Invalid input. Please try again.\n")

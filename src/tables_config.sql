@@ -1,13 +1,13 @@
 ## Create a set of database tables and define relationships between them
 CREATE TABLE Supplier (
             supplier_id INT,
-            name VARCHAR(100) NOT NULL,
+            name VARCHAR(35) NOT NULL,
             phone_number VARCHAR(15),
             PRIMARY KEY (supplier_id)
 );
 CREATE TABLE Product (
             product_id INT,
-            name VARCHAR(100) NOT NULL,
+            name VARCHAR(35) NOT NULL,
             supplier_id INT,
             buying_price DECIMAL(10, 2),
             selling_price DECIMAL(10, 2),
@@ -17,8 +17,8 @@ CREATE TABLE Product (
 
 CREATE TABLE Customer (
             customer_id INT,
-            name VARCHAR(100) NOT NULL,
-            email VARCHAR(100),
+            name VARCHAR(35) NOT NULL,
+            email VARCHAR(35),
             total_spent DECIMAL(10, 2),
             PRIMARY KEY (customer_id)
 );
