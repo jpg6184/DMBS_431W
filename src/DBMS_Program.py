@@ -87,7 +87,7 @@ def get_db_connection(curr_user = User()):
                 # Ask if user wants to create a new database
                 create_new_db = input(f"Do you want to create a new database '{DB_NAME}'? (y/n): ")
                 if create_new_db == 'y' or create_new_db == 'Y':
-                    running = create_database(DB_NAME)
+                    running = create_database(DB_NAME, curr_user)
                 elif create_new_db == 'n' or create_new_db == 'N':
                     running = False
             break
